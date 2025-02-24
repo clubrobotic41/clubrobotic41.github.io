@@ -1,34 +1,66 @@
 "use client";
 
-import Image from "next/image";
-import * as React from "react";
-import { HeroUIProvider } from "@heroui/react";
+import React, { useState, useEffect } from "react";
+import { Button, HeroUIProvider, Image } from "@heroui/react";
 import { LampContainer } from "@/components/effects/lamp";
-import { motion } from "framer-motion";
 import Navbar from "@/components/utils/navbar";
 import Footer from "@/components/utils/footer";
 import { Accordion, AccordionItem } from "@heroui/react";
+import logo from "@/public/assets/logo/logo.svg";
+import MetallicPaint, { parseLogoImage } from "@/components/effects/metalic-paint";
+import Lanyard from "@/components/ui/Lanyard/Lanyard";
 
 export default function Home() {
+  const [imageData, setImageData] = useState<ImageData | null>(null);
+
+  useEffect(() => {
+    async function loadDefaultImage() {
+      try {
+        const response = await fetch(logo);
+        const blob = await response.blob();
+        const file = new File([blob], "default.png", { type: blob.type });
+        const { imageData } = await parseLogoImage(file);
+        setImageData(imageData);
+      } catch (err) {
+        console.error("Error loading default image:", err);
+      }
+    }
+
+    loadDefaultImage();
+  }, []);
+
   return (
     <HeroUIProvider>
       <div className="min-h-screen justify-between flex flex-col w-full items-center">
         <Navbar />
         <div className="flex flex-col items-center justify-center w-full ">
           <LampContainer>
-            <motion.h1
-              initial={{ opacity: 0.5, y: 100 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{
-                delay: 0.3,
-                duration: 0.8,
-                ease: "easeInOut",
-              }}
-              className="mt-8 bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl"
-            >
-              Build the future
-              <br /> with robotics club
-            </motion.h1>
+            <div className="w-full flex flex-row">
+              <div>
+                <div>New: something something</div>
+                <div>Join and get extra credits from school!</div>
+                <div>
+                  JOint us amaizn grobotic dsaalkhflwdahfkni vlksdfjlk iwf hsdk
+                  nfkw hvkw nvkow hilsddw hvjo jfhdsovh sdo njo fhidsosh fon fd
+                </div>
+                <Button size="lg">Join us now!</Button>
+              </div>
+              {imageData && (
+                <MetallicPaint
+                  imageData={imageData}
+                  params={{
+                    edge: 2,
+                    patternBlur: 0.005,
+                    patternScale: 2,
+                    refraction: 0.015,
+                    speed: 0.3,
+                    liquid: 0.07,
+                  }}
+                />
+              )}
+              <Lanyard position={[0, 0, 20]} gravity={[0, -40, 0]} />
+
+            </div>
           </LampContainer>
         </div>
         <div className="flex flex-col items-center justify-center w-full max-w-[1300] ">
