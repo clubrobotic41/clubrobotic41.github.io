@@ -7,27 +7,9 @@ import Navbar from "@/components/utils/navbar";
 import Footer from "@/components/utils/footer";
 import { Accordion, AccordionItem } from "@heroui/react";
 import logo from "@/public/assets/logo/logo.svg";
-import MetallicPaint, { parseLogoImage } from "@/components/effects/metalic-paint";
-import Lanyard from "@/components/ui/Lanyard/Lanyard";
 
 export default function Home() {
-  const [imageData, setImageData] = useState<ImageData | null>(null);
-
-  useEffect(() => {
-    async function loadDefaultImage() {
-      try {
-        const response = await fetch(logo);
-        const blob = await response.blob();
-        const file = new File([blob], "default.png", { type: blob.type });
-        const { imageData } = await parseLogoImage(file);
-        setImageData(imageData);
-      } catch (err) {
-        console.error("Error loading default image:", err);
-      }
-    }
-
-    loadDefaultImage();
-  }, []);
+  
 
   return (
     <HeroUIProvider>
@@ -45,20 +27,7 @@ export default function Home() {
                 </div>
                 <Button size="lg">Join us now!</Button>
               </div>
-              {imageData && (
-                <MetallicPaint
-                  imageData={imageData}
-                  params={{
-                    edge: 2,
-                    patternBlur: 0.005,
-                    patternScale: 2,
-                    refraction: 0.015,
-                    speed: 0.3,
-                    liquid: 0.07,
-                  }}
-                />
-              )}
-              <Lanyard position={[0, 0, 20]} gravity={[0, -40, 0]} />
+              
 
             </div>
           </LampContainer>
