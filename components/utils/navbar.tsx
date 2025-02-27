@@ -161,6 +161,10 @@ function Navbar({ className }: { className?: string }) {
     router.push("/team");
   };
 
+  const toNewsletter = () => {
+    router.push("/newsletter");
+  };
+
   const toDiscord = () => {
     window.location.href = "https://discord.gg/KV9zD7bDjw";
   };
@@ -219,6 +223,7 @@ function Navbar({ className }: { className?: string }) {
             <Button variant="light" isIconOnly onPress={toWhatsapp}>
               <FaWhatsapp size={24} />
             </Button>
+            <Button variant="faded" onPress={toNewsletter}>Join Our Newsletter</Button>
           </div>
         </NavbarContent>
 
@@ -241,6 +246,7 @@ function Navbar({ className }: { className?: string }) {
             <NavbarMenuItem className="color-primary" onClick={toWhatsapp}>
               Whatsapp
             </NavbarMenuItem>
+            <NavbarMenuItem onClick={toNewsletter}>Join Our Newsletter</NavbarMenuItem>
           </>
         </NextUINavbarMenu>
       </NextUINavbar>
